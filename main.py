@@ -1,3 +1,4 @@
+# Importando bibliotecas necessárias
 import os
 from supabase import create_client, Client
 import requests
@@ -11,12 +12,17 @@ SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 ZAPI_URL = os.getenv("ZAPI_URL")
 ZAPI_TOKEN = os.getenv("ZAPI_TOKEN")
 
+# Criando cliente Supabase
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+
+# Função para buscar contatos no Supabase
 
 
 def get_contacts():
     response = supabase.table("contatos").select("*").execute()
     return response.data
+
+# Função para enviar mensagem via ZAPI
 
 
 def send_message(phone, name):
@@ -30,6 +36,7 @@ def send_message(phone, name):
     print(f"Enviado para {phone}: {r.status_code}")
 
 
+# Executando o script
 if __name__ == "__main__":
     contatos = get_contacts()
     for contato in contatos[:3]:  # até 3 contatos
